@@ -1,0 +1,67 @@
+<nav class="navbar">
+        <h1>Registration Form - Template Driven</h1>
+</nav>
+<div class="container">
+        <div class="paper">
+                <form class="form-component" (ngSubmit)="onSubmit(userObj)">
+                        <mat-form-field class="form_field">
+                                <mat-label>Name</mat-label>
+                                <input type="text" matInput name="name" #name="ngModel" [(ngModel)]="userObj.name" required/>
+                                <mat-error *ngIf="name.invalid && (name.dirty || name.touched)">
+                                        <small>Name is required</small>
+                                </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="form_field">
+                                <mat-label>Email</mat-label>
+                                <input type="email" matInput name="email" #email="ngModel" [(ngModel)]="userObj.email" required/>
+                                <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+                                        <small *ngIf="email.errors?.['required']">Email is required</small>
+                                </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="form_field">
+                                <mat-label>Password</mat-label>
+                                <input type="password" matInput name="password" #password="ngModel" [(ngModel)]="userObj.password" required />
+                                <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+                                  <small *ngIf="password.errors?.['required']">Password is required</small>
+                                  <small *ngIf="password.value?.length > 0 && password.value.length < 8">Password should contain minimum 8 characters</small>
+                                </mat-error>
+                                
+                        </mat-form-field>
+                        <mat-form-field class="form_field">
+                                <mat-label>Phone</mat-label>
+                                <input type="tel" matInput name="phone" #phone="ngModel" [(ngModel)]="userObj.phone" required pattern="[0-9]{10}"/>
+                                <mat-error *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                                        <small *ngIf="phone.errors?.['required']">Phone is required</small>
+                                        <small *ngIf="phone.errors?.['pattern']">Phone contains 10 digits</small>
+                                </mat-error>
+                        </mat-form-field>
+                        <mat-radio-group [(ngModel)]="userObj.gender" name="gender" required #gender="ngModel">
+                                <mat-label>Gender</mat-label>
+                                <mat-radio-button value="male">Male</mat-radio-button>
+                                <mat-radio-button value="female">Female</mat-radio-button>
+                                <mat-error *ngIf="gender.invalid && (gender.dirty || gender.touched)">
+                                        <small>Select a gender</small>
+                                    </mat-error>
+                              </mat-radio-group>                              
+                        <mat-form-field class="form_field">
+                                <mat-label>Country</mat-label>
+                                <mat-select  #country="ngModel" name="country" [(ngModel)]="userObj.country" required>
+                                        <mat-option value="us">United States</mat-option>
+                                        <mat-option value="ca">Canada</mat-option>
+                                        <mat-option value="uk">United Kingdom</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="country.invalid && (country.dirty || country.touched)">
+                                        <span *ngIf="country.errors?.['required']">Country is required</span>
+                                </mat-error>
+                        </mat-form-field>
+                        <mat-checkbox name="agreeToTC" #agreeToTC="ngModel" [(ngModel)]="userObj.agreeToTC">Agree To Terms & Conditions</mat-checkbox>
+                        <button color="accent" mat-raised-button type="submit">Submit</button>
+                </form>
+        </div>
+        <div class="paper info">
+                <h1>User Details</h1>
+                <div  class="user-obj" *ngFor="let entry of userObj | keyvalue">
+                        <p>{{ entry.key }}: {{ entry.value }}</p>
+                </div>       
+        </div>
+</div>
